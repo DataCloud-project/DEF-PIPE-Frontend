@@ -1,17 +1,31 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+    <UserSecretsId>6cf10097-926e-477b-a72f-3978acb5f6d4</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <UserSecretsID>48c818b8-be42-492d-b524-f7e87d14f9de</UserSecretsID> 
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.9" />
+    <PackageReference Include="AspNet.Security.OAuth.Keycloak" Version="6.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.6.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
@@ -24,12 +38,19 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\components\PalettePane.tsx" />
-    <None Remove="ClientApp\src\components\PipelineDesigner\panes\CanvasPane.tsx" />
-    <None Remove="ClientApp\src\components\PipelineDesigner\panes\PropertyPane.tsx" />
-    <None Remove="ClientApp\src\components\TemplateDesigner\panes\TemplateCanvasPane.tsx" />
-    <None Remove="ClientApp\src\components\TemplateDesigner\panes\TemplatePalettePane.tsx" />
-    <None Remove="ClientApp\src\components\TemplateDesigner\panes\TemplatePropertyPane.tsx" />
+    <None Remove="ClientApp\src\components\PipelineDesigner\panes\CanvasPane.js" />
+    <None Remove="ClientApp\src\components\PipelineDesigner\panes\CanvasPane.js.map" />
+    <None Remove="ClientApp\src\components\PipelineDesigner\panes\PropertyPane.js" />
+    <None Remove="ClientApp\src\components\PipelineDesigner\panes\PropertyPane.js.map" />
     <None Remove="ClientApp\src\models\index.ts" />
+    <None Remove="ClientApp\src\services\RepoService.js" />
+    <None Remove="ClientApp\src\services\RepoService.ts" />
+    <None Remove="ClientApp\src\store\Canvas.js" />
+    <None Remove="ClientApp\src\store\Canvas.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\services\RepoService.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +77,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataCloud.PipelineDesigner.CanvasModel\DataCloud.PipelineDesigner.CanvasModel.csproj" />
+    <ProjectReference Include="..\DataCloud.PipelineDesigner.Repositories\DataCloud.PipelineDesigner.Repositories.csproj" />
     <ProjectReference Include="..\DataCloud.PipelineDesigner.Services\DataCloud.PipelineDesigner.Services.csproj" />
     <ProjectReference Include="..\DataCloud.PipelineDesigner.WorkflowModel\DataCloud.PipelineDesigner.WorkflowModel.csproj" />
   </ItemGroup>
@@ -85,5 +107,7 @@
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

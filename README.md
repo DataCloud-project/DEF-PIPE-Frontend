@@ -5,40 +5,71 @@
 
 # DEF-PIPE Frontend
 
-The DEF-PIPE Frontend is a graphic pipeline designer tool for defining Big Data pipelines and tranforming them to DSL. The pipeline designer is deployed and accessible at https://pipelinedesign.azurewebsites.net/
+The DEF-PIPE Frontend is a graphic pipeline designer tool for defining Big Data pipelines and tranforming them to DSL. The pipeline designer test version is deployed and accessible at http://def-pipe.northeurope.azurecontainer.io
 
-Because of several benefits such as ease of use, compability, and reusability, the web application approach was chosen to implement a pipeline designer. From a high-level view, the system consists of the following three components:
-
-![Architecture of the DEF-PIPE tool.](https://github.com/DataCloud-project/DEF-PIPE/blob/main/docs/high-level-components.png)
+Because of several benefits such as ease of use, compability, and reusability, the web application approach was chosen to implement a pipeline designer.
 
 ## Front-End
-- The main part of the application is the interface for designing big data pipelines.This interface is implemented as a single page application using ReactJS. the popularity and stability of ReactJS make it potentially more friendly with developers to continue with the project later on.
+- The main part of the application is the interface for designing big data pipelines. This interface is implemented as a single page application using ReactJS. The popularity and stability of ReactJS make it potentially more friendly with developers to continue with the project later on.
 The project also use Bootstrap, a framework providing basic UI components building blocks which are easy to customize.
 
 ## Back-End
-- The back-end is implemented in CSharp using Dor Net (.NET) framework from Microsoft. In particular, ASP.NET Core, which is the part of the >NET framework for web application, is being used. It implements a web API providing a central interface for operations such as managing pipelines and templates data, transforming pipelines into DSL.
+- The back-end is implemented in CSharp using Dot Net (.NET) framework from Microsoft. In particular, ASP.NET Core, which is the part of the NET framework for web application, is being used. It implements a web API providing a central interface for operations such as managing pipelines and templates data, transforming pipelines into DSL.
 
 ## Database
-- The database in Pipeline Designer is mainly used to persist pipelines and templates created by users. As such, there was no need for any kind of complex query capabilities. Based on this assesment Entity Framework which is an object-relational mapping (ORM) framework for .NET is used.
+- The database in Pipeline Designer is used to persist steps and workflow created by users. As the visual workflows are represented in JSON format, MongoDB is used.
 
-# Installation
+# Deployment
+
+The solution is configured to work in a docker container, the build configuration is located in the [Dockerfile](./Dockerfile) and a [docker-compose.yml](./docker-compose.yml) is available at the root of the repository.
+
+After setting the environement variables required bellow, run `docker-compose up` to build the project and start the container. The application will be reachable on the port 80. 
+
+ℹ️ *An official docker image will be soon published on docker hub*
+
+For infomation how to configure or use docker, see the [official documentation](https://docs.docker.com/).
+
+## Environment
+
+### Docker
+
+In the [docker-compose.yml](./docker-compose.yml), change the following variables
+
+| Variable | Description |
+|---|---|
+|MANGO_CONNECTION_STRING| Connection string for MongoDB |
+|KEYCLOAK_AUTHORITY| Url of the KeyCloak authorization server  |
+
+### ReactJS
+
+For the frontend, you need to add a `.env` file in [DataCloud.PipelineDesigner.WebClient/ClientApp](./DataCloud.PipelineDesigner.WebClient/ClientApp) and set the following variables:
+
+| Variable | Description |
+|---|---|
+|REACT_APP_KEYCLOAK_URL| KeyCloak base url |
+|REACT_APP_KEYCLOAK_REALM| KeyCloak realm  |
+|REACT_APP_KEYCLOAK_CLIENT_ID| KeyCloak client id |
+
+A [.env.example](DataCloud.PipelineDesigner.WebClient/ClientApp/.env.example) file is available for example.
+
+# C# Environment
 
 ## Toolings
 
 For both Windows and MacOS, install the following:
-- [NodeJS 14.16.0](https://nodejs.org/de/blog/release/v14.16.0/)
+- [NodeJS 16.15.0](https://nodejs.org/de/blog/release/v16.15.0/)
 
 ### Windows
 
 - Download and install [Visual Studio 2022](https://visualstudio.microsoft.com/vs/). The free Community edition can be used in case a Visual Studio license is not available.
-- Go to [.NET SDK Download](https://dotnet.microsoft.com/en-us/download/dotnet/5.0) and download & install the SDK 5.0.100 for Windows.
-- Go to [.NET Download](https://dotnet.microsoft.com/en-us/download/dotnet/5.0/runtime) and download & install the Hosting Bundle for Windows.
+- Go to [.NET SDK Download](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) and download & install the SDK 6.0.1 for Windows.
+- Go to [.NET Download](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime) and download & install the Hosting Bundle for Windows.
 
 ### MacOS
 
 - Download and install [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/).
-- Go to [.NET SDK Download](https://dotnet.microsoft.com/en-us/download/dotnet/5.0) and download & install the SDK 5.0.100 for MacOS.
-- Go to [.NET Download](https://dotnet.microsoft.com/en-us/download/dotnet/5.0/runtime) and download & install the Hosting Bundle for MacOS.
+- Go to [.NET SDK Download](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) and download & install the SDK 6.0.1 for MacOS.
+- Go to [.NET Download](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime) and download & install the Hosting Bundle for MacOS.
 
 ## Build
 
@@ -53,8 +84,8 @@ The main components are:
 - Pipeline Designer: Main component for designing data pipelines. It consists of three sub- components: Canvas Pane, Palette Pane, and Property Pane.
 - Template Designer: Main component for designing templates. It consists of three sub-components: Canvas Pane, Palette Pane, and Property Pane.
 - Canvas Pane: A shared component to be reused in both Pipeline Designer and Template Designer. This component contains all the logic for rendering visualization of the pipeline.
-- Palatte Pane: A shared component to be reused in both Pipeline Designer and Template Designer. This component allows users to intertact with the library of available templates.
-- Property Pane: A shared component to be reused in both Pipeline Designer and Template Designer. This component manages the properties of the each element in the pipeline.
+- Palette Pane: A shared component to be reused in both Pipeline Designer and Template Designer. This component allows users to interact with the library of available templates.
+- Property Pane: A shared component to be reused in both Pipeline Designer and Template Designer. This component manages the properties of each element in the pipeline.
 
 ## Working with the codebase
 

@@ -6,7 +6,7 @@ namespace DataCloud.PipelineDesigner.Core
     {
         public class Configurations
         {
-            public const string ConnectionString = "PipelineDesignerDatabase";
+            public const string ConnectionString = "";
         }        
     }
 }
