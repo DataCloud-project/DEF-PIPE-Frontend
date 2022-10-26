@@ -102,3 +102,7 @@ The main components are:
 - The business logic layer containing the interface and implementation of the Workflow transformer and DSL transformer components is located at **DataCloud.PipelineDesigner.Services**. This is the main component for designing pipelines and it consists of three sub- components: Canvas Pane, Palette Pane, and Property Pane.
 
 - **DataCloud.PipelineDesigner.Core** is a class library to hold all code that needs to be shared between all layers.
+
+## Contributing
+
+Before raising a pull request, please read our contributing guide.
